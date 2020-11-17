@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -64,6 +64,10 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('profile-settings') }}">
+                                    {{ __('My profile') }}
+                                </a>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -84,6 +88,7 @@
             @yield('content')
         </main>
         <livewire:scripts />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             window.addEventListener('closeModal', event => {
                 $('#modalForm').modal('hide');
@@ -101,6 +106,18 @@
                 $('#modalFormDelete').modal('hide');
             })
 
+            //  Open the show photos modal
+            window.addEventListener('openModalShowPhotos', event => {
+                $('#modalShowPhotos').modal('show');
+            })
+            
+            $(document).ready(function(){
+                // This event is triggered when the modal is hidden
+                $("#modalForm").on('hidden.bs.modal', function(){
+                    livewire.emit('forcedCloseModal');
+                });
+
+            });
         </script>
     </div>
 </body>

@@ -1,4 +1,12 @@
 <div>
+    <label for=""> Featured Image</label>  <br/>
+    <input type="file" wire:model="featureImage"/>
+    <br/>  <br/>
+
+    <label >Photos</label><br/>
+    <input type="file" wire:model="additionalPhotos" multiple />
+    <br/><br/>
+
     <label for="">Title</label>
     <input wire:model="title" type="title" class=" form-control">
     @error('title')

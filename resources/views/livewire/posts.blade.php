@@ -24,6 +24,24 @@
     </div>
 
     <!-- Modal -->
+    <div class="modal fade" id="modalShowPhotos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Additional photos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @livewire('post-additional-photos')
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
     <div class="modal fade" id="modalFormDelete" tabindex="-1" role="dialog" aria-labelledby="modalFormDeletePost"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -50,24 +68,33 @@
         @if ($posts->count())
         <table class="table table-striped">
             <thead>
+                <th>Featured Image</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th width="30%">Actions</th>
             </thead>
             <tbody>
                 @foreach ($posts as $post)
                 <tr>
+                    <td>
+                        @if (!empty($post->feature_image))
+                            <img width="100px" src="{{ url('storage/photos/' . $post->feature_image) }}" >
+                        @else
+                            No feature image available
+                        @endif
+                    </td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->content }}</td>
                     <td>
-                        <button wire:click="selectItem({{ $post->id }}, 'update')" class="btn btn-sm btn-success">Update</button>
                         <button wire:click="selectItem({{ $post->id }}, 'delete')" class="btn btn-sm btn-danger">Delete</button>
+                        <button wire:click="selectItem({{ $post->id }}, 'update')" class="btn btn-sm btn-success">Update</button>
+                        <button wire:click="selectItem({{ $post->id }}, 'showPhotos')" class="btn btn-sm btn-primary">Photos</button>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        {{ $posts->links()  }}
+        {{$posts->links()}}
         @endif
     </div>
 </div>
